@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès Refusé - 403 Forbidden</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container" style="text-align: center;">
+        <h1 style="color: #e53e3e; font-size: 48px; margin-bottom: 10px;">403</h1>
+        <h2>Accès Refusé (Forbidden)</h2>
+
+        <div class="alert alert-danger">
+            Désolé <span th:if="${username}"><strong th:text="${username}"></strong></span>, vous n'avez pas les autorisations nécessaires pour accéder à cette ressource.
+        </div>
+
+        <p style="color: #718096; margin-bottom: 25px;">
+            Cette page requiert le rôle <strong>ROLE_ADMIN</strong>. Votre compte actuel possède uniquement des privilèges limités.
+        </p>
+
+        <a th:href="@{/user/dashboard}" class="btn" style="margin-bottom: 10px;">Retour à mon espace</a>
+        <a th:href="@{/}" class="btn btn-secondary" style="margin-bottom: 15px;">Retour à l'accueil</a>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-danger">Se déconnecter et changer de compte</button>
+        </form>
+    </div>
+</body>
+</html>

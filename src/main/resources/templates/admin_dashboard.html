@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord Administrateur</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h2 style="color: #c53030;">🛡️ Panneau d'Administration</h2>
+        <div class="alert alert-danger" style="background-color: #fff5f5; color: #9b2c2c; border-color: #feb2b2;">
+            Zone hautement sécurisée réservée exclusivement au profil <strong>ADMIN</strong>.
+        </div>
+
+        <p>Connecté en tant que : <strong th:text="${username}">admin</strong></p>
+        <p>Privilèges accordés : <span class="badge badge-danger" th:text="${authorities}">[ROLE_ADMIN, ROLE_USER]</span></p>
+
+        <div style="background-color: #f7fafc; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #e2e8f0;">
+            <h3 style="font-size: 16px; margin-bottom: 10px;">Comptes enregistrés en mémoire (InMemoryUserDetailsManager) :</h3>
+            <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 2px solid #cbd5e0;">
+                        <th style="padding: 6px;">Utilisateur</th>
+                        <th style="padding: 6px;">Mot de passe hashé</th>
+                        <th style="padding: 6px;">Rôles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 6px;"><code>user</code></td>
+                        <td style="padding: 6px;">BCrypt ($2a$10$...)</td>
+                        <td style="padding: 6px;"><span class="badge badge-primary">ROLE_USER</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px;"><code>admin</code></td>
+                        <td style="padding: 6px;">BCrypt ($2a$10$...)</td>
+                        <td style="padding: 6px;">
+                            <span class="badge badge-danger">ROLE_ADMIN</span>
+                            <span class="badge badge-primary">ROLE_USER</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <ul class="links-list">
+            <li><a th:href="@{/user/dashboard}">👤 Aller à l'Espace Utilisateur</a></li>
+            <li><a th:href="@{/}">🏠 Retour à l'accueil</a></li>
+        </ul>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-danger">Se déconnecter</button>
+        </form>
+    </div>
+</body>
+</html>

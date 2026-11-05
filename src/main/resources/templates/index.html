@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Spring Security Demo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h2>Bienvenue sur l'application publique</h2>
+        <p style="text-align: center; color: #718096;">
+            TP 9 : Authentification en mémoire avec Spring Security
+        </p>
+
+        <!-- État de connexion -->
+        <div th:if="${isLoggedIn}" class="alert alert-success">
+            Connecté en tant que : <strong th:text="${username}">user</strong>
+            <br>
+            Rôles : <span th:text="${authorities}">[ROLE_USER]</span>
+        </div>
+
+        <div th:unless="${isLoggedIn}" class="alert alert-warning">
+            Vous naviguez actuellement en tant qu'invité (non connecté).
+        </div>
+
+        <ul class="links-list">
+            <li>
+                <a th:href="@{/user/dashboard}">
+                    👤 Accéder à l'Espace Utilisateur <code>(/user/dashboard)</code>
+                    <br><small style="color: #718096;">Accessible aux rôles : USER, ADMIN</small>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/dashboard}">
+                    🛡️ Accéder à l'Espace Administrateur <code>(/admin/dashboard)</code>
+                    <br><small style="color: #718096;">Accessible uniquement au rôle : ADMIN</small>
+                </a>
+            </li>
+        </ul>
+
+        <div th:if="${isLoggedIn}">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-danger">Se déconnecter</button>
+            </form>
+        </div>
+        <div th:unless="${isLoggedIn}">
+            <a th:href="@{/login}" class="btn">Se connecter</a>
+        </div>
+
+        <div class="credentials-box">
+            <strong>Identifiants de test préconfigurés :</strong>
+            <ul style="margin-left: 20px; margin-top: 5px;">
+                <li><code>user</code> / <code>1111</code> → Rôle : <code>ROLE_USER</code></li>
+                <li><code>admin</code> / <code>1234</code> → Rôles : <code>ROLE_ADMIN</code>, <code>ROLE_USER</code></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord Utilisateur</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h2>Tableau de bord Utilisateur</h2>
+        <div class="alert alert-success">
+            Bienvenue dans votre espace sécurisé, <strong th:text="${username}">user</strong> !
+        </div>
+
+        <p>Vos rôles actuels : <span class="badge badge-primary" th:text="${authorities}">[ROLE_USER]</span></p>
+
+        <ul class="links-list">
+            <li>
+                <a th:href="@{/}">🏠 Retour à l'accueil public</a>
+            </li>
+            <li sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin/dashboard}" style="border-left: 4px solid #e53e3e;">
+                    🛡️ Accéder à l'espace Administrateur (Privilège ADMIN détecté)
+                </a>
+            </li>
+            <li sec:authorize="!hasRole('ADMIN')">
+                <a th:href="@{/admin/dashboard}" style="opacity: 0.7;">
+                    🚫 Tester l'accès Administrateur (Tester l'erreur 403 Forbidden)
+                </a>
+            </li>
+        </ul>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-danger">Se déconnecter</button>
+        </form>
+    </div>
+</body>
+</html>
